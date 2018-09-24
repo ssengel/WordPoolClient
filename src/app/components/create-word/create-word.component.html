@@ -1,0 +1,35 @@
+<br>
+<br>
+
+<form #wordForm>
+  <div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label for="eng">Eng</label>
+            <input type="text" class="form-control"  required #eng>
+          </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label for="tr">Tr</label>
+            <input type="text" class="form-control"  required #tr>
+          </div>
+    </div>
+  </div>
+  
+ 
+  <div class="form-group">
+    <label for="sentence">Sentence</label>
+    <input type="text" class="form-control" required #sentence>
+  </div>
+
+  <div class="form-group">
+      <label for="category">Word Category</label>
+      <select class="form-control" required #category>
+        <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+      </select>
+    </div>
+
+
+  <button type="submit" (click)="create(eng, tr, sentence, category)" class="btn btn-primary">Create</button>
+</form>
