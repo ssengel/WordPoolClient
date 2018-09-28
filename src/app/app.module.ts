@@ -16,6 +16,7 @@ import { PoolComponent } from './components/pool/pool.component';
 import { AuthInterceptor } from './intercepters/auth-interceptor';
 import { CreateWordComponent } from './components/create-word/create-word.component';
 import { HttpErrorInterceptor } from './intercepters/http-error-interceptor';
+import { RandomComponent } from './components/random/random.component';
 
 
 const routerConfig: Route[] = [
@@ -24,10 +25,11 @@ const routerConfig: Route[] = [
     path:'',
     component: MainComponent,
     children:[
-      { path: '', redirectTo: 'wall', pathMatch: 'full' ,canActivate:[AuthGuard]},
-      { path: 'wall', component: WallComponent ,canActivate:[AuthGuard]},
+      { path: '', redirectTo: 'pool', pathMatch: 'full' ,canActivate:[AuthGuard]},
       { path: 'pool', component: PoolComponent ,canActivate:[AuthGuard]},
-      { path: 'createWord', component: CreateWordComponent ,canActivate:[AuthGuard]}
+      { path: 'createWord', component: CreateWordComponent ,canActivate:[AuthGuard]},
+      { path: 'random', component: RandomComponent ,canActivate:[AuthGuard]}
+
     ]
   },
   {
@@ -54,7 +56,8 @@ const routerConfig: Route[] = [
     HeaderComponent,
     WallComponent,
     PoolComponent,
-    CreateWordComponent
+    CreateWordComponent,
+    RandomComponent
   ],
   imports: [
     BrowserModule,

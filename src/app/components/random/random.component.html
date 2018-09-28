@@ -1,0 +1,14 @@
+
+
+<div id="wordContent" class="row justify-content-md-center align-items-center" *ngIf="word" (click)="toggle()">
+
+    <div>
+      <h1 *ngIf="!state" class="display-3">{{word.tr}}</h1>
+      <div class="row justify-content-md-center">
+        <h1 *ngIf="state" class="display-3">{{word.eng}}</h1>
+      </div>
+      
+      <h1 *ngIf="state" class="display-4">{{word.sentence}}</h1>
+    </div>
+
+</div>
