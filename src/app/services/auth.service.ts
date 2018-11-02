@@ -8,9 +8,9 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  private readonly url = "http://localhost:8080/"
+  private readonly url = "http://212.125.24.247:8080/"
 
-  constructor(private router : Router, private http: HttpClient, private authService: AuthService) { }
+  constructor(private router : Router, private http: HttpClient) { }
 
   login(user: any) {
     return this.http.post<User>(this.url + 'login', user);

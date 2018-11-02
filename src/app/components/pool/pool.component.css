@@ -1,3 +1,6 @@
-#backgroud-gray{
-    background: #919191;
+
+.wordCard{
+    border-bottom: 3px solid darkgreen;
+    margin-top: 10px;
 }
+

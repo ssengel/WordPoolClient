@@ -1,0 +1,29 @@
+<div style="height: 100vh;" class="container">
+    <br>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10">PWors</div>
+                <div class="col-md-2 text-right"><a href="#">New PWord</a></div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <!-- pword List -->
+    <div *ngIf="pWords">
+        <div *ngFor="let pWord of pWords">
+            <div class="card" style="border-left: solid 5px salmon;">
+                <div class="card-body">
+                    {{pWord.eng}}
+                </div>
+            </div>
+            <br>
+        </div>
+
+    </div>
+    <!-- pword List -->
+</div>

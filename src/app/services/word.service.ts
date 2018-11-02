@@ -8,8 +8,8 @@ import { catchError } from "rxjs/operators";
   providedIn: "root"
 })
 export class WordService {
-  private userId: String = localStorage.getItem("userId");
-  private readonly url = "http://localhost:8080/user/" + this.userId + "/word/";
+
+  private readonly url = "http://212.125.24.247:8080/word/";
 
   constructor(private http: HttpClient, private err: ErrorHandlerService) {}
 

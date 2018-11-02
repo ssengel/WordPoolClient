@@ -15,6 +15,7 @@ export class AuthInterceptor implements HttpInterceptor{
         if(currentUser){
             req = req.clone({
                 headers: req.headers.set('x-access-token', currentUser.token)
+                        .set('device', 'angular')
             })
         }
         

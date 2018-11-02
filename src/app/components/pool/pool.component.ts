@@ -11,7 +11,12 @@ import { HttpErrorResponse } from "@angular/common/http";
 })
 export class PoolComponent implements OnInit {
 
-  private categories = ["A", "B", "C"];
+  private categories = [
+    "Health",
+    "Electronic",
+    "Art",
+    "Computer"
+  ];
   words: Word[];
   modal: Word;
   constructor(private wordService: WordService) {}

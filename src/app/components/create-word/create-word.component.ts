@@ -11,7 +11,12 @@ import { HttpErrorResponse } from "@angular/common/http";
   styleUrls: ["./create-word.component.css"]
 })
 export class CreateWordComponent implements OnInit {
-  private categories = ["A", "B", "C"];
+  private categories = [
+    "Health",
+    "Electronic",
+    "Art",
+    "Computer"
+  ];
 
   constructor(private wordService: WordService, private router: Router) {}
 
