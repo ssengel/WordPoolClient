@@ -16,6 +16,10 @@ export class AuthService {
     return this.http.post<User>(this.url + 'login', user);
   }
 
+  register(user: any){
+    return this.http.post<User>(this.url + "login", user);
+  }
+
   isLoggedIn(): boolean {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 

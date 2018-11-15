@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule, Route } from '@angular/router'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
@@ -20,6 +20,7 @@ import { RandomComponent } from './components/random/random.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PoolsComponent } from './components/pools/pools.component';
 import { PWordComponent } from './components/pword/pword.component'
+import { ErrorHandlerService } from './services/error-handler.service';
 
 const routerConfig: Route[] = [
   {
@@ -74,7 +75,8 @@ const routerConfig: Route[] = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true},
-    // {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+    { provide: ErrorHandler, useClass:ErrorHandlerService },
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

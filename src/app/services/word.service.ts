@@ -15,14 +15,12 @@ export class WordService {
 
   getAll() {
     return this.http
-      .get<Word[]>(this.url);
-     
+      .get<Word[]>(this.url);  
   }
 
   getById(id: String) {
     return this.http
       .get<Word>(this.url + id);
-  
   }
 
   create(word: Word) {

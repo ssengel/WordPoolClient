@@ -1,34 +1,37 @@
 <br>
 <div *ngIf="pools" class="container">
-  <h3>Create a new Pool</h3>
-  <hr>
-  <!-- form -->
-      <form>
-        <div class="row">
-          <div class="col-md-10">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Pool Name" required #poolName>
-            </div>
-          </div>
 
-          <div class="col-md-2">
-              <button type="submit" (click)="createPool(poolName)" class="btn btn-dark">Create</button>
-          </div>
+    <!-- head -->
+    <form class="bg-white">
+       
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group p-3">
+                        <input type="text" class="form-control" placeholder="Pool Name" required #poolName>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-secondary" (click)="createPool(poolName)">Create Pool</button>
+                        </div>
+                    </div>
+                </div>
+           
         </div>
 
-        </form>
-  <!-- form -->
-      <h3>Pools</h3>
-      <hr>
-      <div class="row">
-          <div *ngFor="let pool of pools" class="col-md-4">
-              <div class="card text-black" >
-                  <img class="card-img-top" src="https://via.placeholder.com/150x100">
-                  <div class="card-body text-center">
-                      <a routerLink="./{{pool._id}}"><h5>{{pool.name}}</h5></a>
-                  </div>
+    </form>
+    <!-- head -->
+
+    <div class="wall">
+        <div class="row">
+            <div *ngFor="let pool of pools" class="col-md-3">
+                <div class="card text-black">
+                    <a routerLink="./{{pool._id}}">
+                        <img class="card-img-top" src="https://lh3.googleusercontent.com/FyZA5SbKPJA7Y3XCeb9-uGwow8pugxj77Z1xvs8vFS6EI3FABZDCDtA9ScqzHKjhU8av_Ck95ET-P_rPJCbC2v_OswCN8A=s688">
+                        <div class="card-body text-center">
+                            {{pool.name}}
+                        </div>
+                    </a>
                 </div>
                 <br>
-          </div>
-      </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,29 +1,120 @@
-<div style="height: 100vh;" class="container">
+<div style="min-height: 100vh;" class="container">
     <br>
-
+    <!-- head -->
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-10">PWors</div>
-                <div class="col-md-2 text-right"><a href="#">New PWord</a></div>
-            </div>
-        </div>
-    </div>
-
-
-    <hr>
-
-    <!-- pword List -->
-    <div *ngIf="pWords">
-        <div *ngFor="let pWord of pWords">
-            <div class="card" style="border-left: solid 5px salmon;">
-                <div class="card-body">
-                    {{pWord.eng}}
+                <div class="col-md-10 align-self-center"><span class="">PWords</span></div>
+                <div class="col text-right">
+                    <div class="btn btn-outline-primary" data-toggle="modal" data-target="#createPWordModal">Create
+                        PWord </div>
                 </div>
             </div>
-            <br>
         </div>
+    </div>
+    <!-- head -->
+    <!-- pword List -->
+    <div class="wall">
+        <div *ngIf="pWords">
+            <div *ngIf="pWords.length === 0 " class="alert alert-info">Bu havuzun hic kelimesi yok</div>
+        </div>
+        <div *ngIf="pWords">
+            <div *ngFor="let pWord of pWords">
+                <div class="card" style="border-left: solid 5px salmon;">
+                    <div class="card-body">
 
+                        <div class="d-flex justify-content-between">
+                            <div><strong>{{pWord.eng}}</strong></div>
+                            <div>{{pWord.createdAt | date: 'short'}}</div>
+                        </div>
+
+                        <div class="text-muted">{{pWord.tr}}</div>
+
+                        <div>{{pWord.sentence}}</div>
+
+                        <div id="{{pWord._id}}Content"style="display: none">
+                            <hr>
+                            <form >
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="eng">Eng</label>
+                                      <input type="text" class="form-control" value="{{pWord.eng}}" name="eng" required #eng>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="tr">Tr</label>
+                                      <input type="text" class="form-control" value="{{pWord.tr}}" name="tr" required #tr>
+                                    </div>
+                                  </div>
+                                </div>
+                      
+                                <div class="form-group">
+                                  <label for="sentence">Sentence</label>
+                                  <input type="text" class="form-control" value="{{pWord.sentence}}" name="sentence" required #sentence>
+                                </div>
+                      
+                              </form>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <div id="{{pWord._id}}Save" (click)="updatePWord(pWord, eng, tr, sentence)" style="display: none" class="btn btn-outline-primary btn-sm mr-2">Save</div>
+                            <div id="{{pWord._id}}Cancel" style="display: none" (click)=cancel(pWord._id) class="btn btn-outline-secondary btn-sm mr-2">Cancel</div>
+                            <div id="{{pWord._id}}Edit" (click)="edit(pWord._id)" class="btn btn-outline-secondary btn-sm mr-2">Edit</div>
+                            <div id="{{pWord._id}}Delete" (click)="deletePWord(pWord._id)" class="btn btn-outline-danger btn-sm">Delete</div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+
+        </div>
     </div>
     <!-- pword List -->
+
+    <!--Create Word Modal -->
+  <div class="modal fade" id="createPWordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create New PWord</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="eng">Eng</label>
+                <input type="text" class="form-control" name="eng" required #eng>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="tr">Tr</label>
+                <input type="text" class="form-control" name="tr" required #tr>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sentence">Sentence</label>
+            <input type="text" class="form-control" name="sentence" required #sentence>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="createPWord(eng, tr, sentence)" data-dismiss="modal" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Create Word Modal -->
 </div>

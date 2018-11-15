@@ -3,6 +3,7 @@ import { WordService } from "../../services/word.service";
 import { Word } from "../../models/word";
 import * as Alertify from "alertifyjs";
 import { HttpErrorResponse } from "@angular/common/http";
+import { async } from "rxjs/internal/scheduler/async";
 
 @Component({
   selector: "app-pool",
@@ -17,23 +18,45 @@ export class PoolComponent implements OnInit {
     "Art",
     "Computer"
   ];
-  words: Word[];
-  modal: Word;
+  private err;
+  private words: Word[];
+  private modal: Word;
   constructor(private wordService: WordService) {}
 
   ngOnInit() {
     this.getWords();
   }
 
-  getWords() {
-    this.wordService.getAll().subscribe(
-      (res: Word[]) => {
-        this.words = res;
-      },
-      (err: HttpErrorResponse) => {
-        Alertify.error("Kelimeler Yuklenemdi. \n");
-      }
-    );
+  async getWords() {
+    this.words = await this.wordService.getAll().toPromise();
+      
+  }
+
+  create(
+    eng: HTMLInputElement,
+    tr: HTMLInputElement,
+    sentence: HTMLInputElement,
+    category: HTMLSelectElement
+  ){
+      let word: Word = {
+        eng: eng.value,
+        tr: tr.value,
+        sentence: sentence.value,
+        category: category.value
+      };
+
+      this.wordService.create(word)
+          .subscribe((res: Word) => {
+              this.words.push(res);
+              eng.value = '';
+              tr.value = '';
+              sentence.value = '';
+              Alertify.success("Created new word..");
+          },
+          ((err: HttpErrorResponse) =>{
+            Alertify.error(err.error.message)
+          })
+      );
   }
 
   delete( id: String){

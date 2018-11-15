@@ -4,4 +4,5 @@ export class PWord {
     eng: String;
     tr: String;
     sentence: String;
+    createdAt?:Date;
 }

@@ -5,7 +5,7 @@ import { HttpEvent,
     HttpResponse,
     HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry, tap } from 'rxjs/operators';
 
 
 export class HttpErrorInterceptor implements HttpInterceptor {

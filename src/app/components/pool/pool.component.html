@@ -1,25 +1,63 @@
 <div *ngIf=words class="row">
-  <div class="container">
-    <div class="row">
-      <div *ngFor="let word of words" class="col-md-4">
-        <div class="card text-center wordCard" (click)="setModalContent(word)" data-toggle="modal" data-target="#myModal">
-          <div class="card-body">
-            <h5 class="card-title">
-              {{word.eng}}
-            </h5>
-            <div class="card-content">
-              {{word.sentence}}
+  <div class="container" style="min-height: 100vh;">
+    <br>
+
+    <!-- Head  -->
+    <div class="container bg-white p-3">
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <select class="custom-select">
+                      <option selected>Filtre</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
             </div>
-          </div>
-        </div>
+
+            <div class="col-md-7">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Word Name" required>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
+            </div>
       </div>
     </div>
+    <!-- Head  -->
+
+
+    <!-- words -->
+    <div class="wall">
+      <div class="row">
+          <div *ngFor="let word of words" class="col-md-4">
+            <div class="card text-center wordCard" style="cursor: pointer;" (click)="setModalContent(word)" data-toggle="modal" data-target="#myModal">
+              <div class="card-body">
+                <h5 class="card-title">
+                  {{word.eng}}
+                </h5>
+                <div class="card-content">
+                  {{word.sentence}}
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+    <!-- words -->
+
     <br>
   </div>
 
   <!-- [routerLink]="['/wordDetail', word._id]" -->
 
-  <!-- Modal -->
+  <!-- Modal Detail-->
   <div *ngIf=modal class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -47,7 +85,6 @@
               </div>
             </div>
 
-
             <div class="form-group">
               <label for="sentence">Sentence</label>
               <input type="text" class="form-control" name="sentence" [(ngModel)]="modal.sentence" required>
@@ -69,5 +106,55 @@
       </div>
     </div>
   </div>
-  <!-- Modal -->
+  <!-- Modal Detail -->
+
+  <!--Create Word Modal -->
+  <div class="modal fade" id="createWordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Create New Word</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #wordForm>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="eng">Eng</label>
+                  <input type="text" class="form-control" name="eng" required #eng>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tr">Tr</label>
+                  <input type="text" class="form-control" name="tr" required #tr>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="sentence">Sentence</label>
+              <input type="text" class="form-control" name="sentence" required #sentence>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Word Category</label>
+              <select class="form-control" name="category" required #category>
+                <option *ngFor="let category of categories">{{category}}</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" (click)="create(eng, tr, sentence, category)" data-dismiss="modal" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Create Word Modal -->
 </div>

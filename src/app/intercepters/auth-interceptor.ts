@@ -1,6 +1,6 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators"
+import { Observable, of } from "rxjs";
+import { tap, catchError } from "rxjs/operators"
 import { Router } from "@angular/router";
 import { Injectable } from "@angular/core";
 
@@ -19,28 +19,30 @@ export class AuthInterceptor implements HttpInterceptor{
             })
         }
         
-        return next.handle(req).pipe(
-            tap(
-                (succ:HttpResponse<any>) => {
+        return next.handle(req)
+            .pipe(
+                tap(
+                    (succ:HttpResponse<any>) => {
 
-                },
-                (err:HttpErrorResponse) => {
-                    if(err.status === 403){
-                        console.log("Yasak alan");
-                        this.router.navigate(['']);
+                    },
+                    (err:HttpErrorResponse) => {
+                        console.log("interceptor Error:", err.message)
+                        
+                        if(err.status === 403){
+                            this.router.navigate(['']);
+                        }
+                        else if(err.status === 401){
+                            localStorage.removeItem('currentUser');
+                            this.router.navigate(['login'])
+                        }
+                        else if(err.status === 0){
+                            localStorage.removeItem('currentUser');
+                            this.router.navigate(['login']);
+                        }else{
+                            console.log('Interceptor Error ==>>', err.message)
+                        }  
                     }
-                    else if(err.status === 401){
-                        console.log("Kullanici girisi basarisiz");
-                        localStorage.removeItem('currentUser');
-                        this.router.navigate(['login'])
-                    }
-                    else if(err.status === 0){
-                        console.log('Sunucuya Erisim saglanamadi')
-                        localStorage.removeItem('currentUser');
-                        this.router.navigate(['login']);
-                    }
-                    
-                }
-            ))
+                )
+            )
     }
 }
