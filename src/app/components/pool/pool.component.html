@@ -4,30 +4,17 @@
 
     <!-- Head  -->
     <div class="container bg-white p-3">
-        <div class="row">
-            <div class="col-md-3">
-                <div>
-                    <select class="custom-select">
-                      <option selected>Filtre</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-            </div>
-
-            <div class="col-md-7">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Word Name" required>
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">Search</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
-            </div>
+      <div class="row">
+          <!-- search -->
+          <div class="col-md-10">
+            <app-search-word></app-search-word>
+          </div>
+          <!-- search -->
+          <!-- create word -->
+          <div class="col-md-2">
+            <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
+          </div>
+          <!-- create word -->
       </div>
     </div>
     <!-- Head  -->
@@ -36,23 +23,32 @@
     <!-- words -->
     <div class="wall">
       <div class="row">
-          <div *ngFor="let word of words" class="col-md-4">
-            <div class="card text-center wordCard" style="cursor: pointer;" (click)="setModalContent(word)" data-toggle="modal" data-target="#myModal">
-              <div class="card-body">
-                <h5 class="card-title">
-                  {{word.eng}}
-                </h5>
-                <div class="card-content">
-                  {{word.sentence}}
-                </div>
+        <div class="col-md-4" *ngFor="let word of words | paginate: { id: 'server', itemsPerPage: perPage, currentPage: p, totalItems: total }">
+          <div class="card text-center wordCard" style="cursor: pointer;" (click)="setModalContent(word)" data-toggle="modal"
+            data-target="#myModal">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{word.eng}}
+              </h5>
+              <div class="card-content">
+                {{word.sentence}}
               </div>
             </div>
           </div>
+        </div>
       </div>
-  </div>
+    </div>
     <!-- words -->
 
-    <br>
+    <!-- pagination -->
+    <div class="card">
+      <div class="bg-wall justify-content-center d-flex mt-3">
+        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
+        <pagination-controls class="my-pagination" (pageChange)="getPage($event)" id="server"></pagination-controls>
+      </div>
+    </div>
+    <!-- pagination -->
+
   </div>
 
   <!-- [routerLink]="['/wordDetail', word._id]" -->

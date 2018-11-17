@@ -3,6 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { RouterModule, Route } from '@angular/router'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -21,6 +22,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PoolsComponent } from './components/pools/pools.component';
 import { PWordComponent } from './components/pword/pword.component'
 import { ErrorHandlerService } from './services/error-handler.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SearchWordComponent } from './components/search-word/search-word.component'
 
 const routerConfig: Route[] = [
   {
@@ -65,13 +68,16 @@ const routerConfig: Route[] = [
     RandomComponent,
     FooterComponent,
     PoolsComponent,
-    PWordComponent
+    PWordComponent,
+    SearchWordComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routerConfig),
     HttpClientModule,
-    FormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    NgxPaginationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true},

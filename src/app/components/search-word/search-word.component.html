@@ -1,0 +1,15 @@
+<section class="filter-wrapper">
+  <div class="keyword-wrapper">
+      <input [formControl]="queryField" type="text" class="form-control" id="keyword" placeholder="Search for words...">
+    <!-- <input [formControl]="queryField" type="text" id="keyword" placeholder="Search for words..." /> -->
+  </div>
+  <ul class="filter-select">
+    <li *ngFor="let word of words" class="filter-select-list">
+      <img alt="" width="50" height="50">
+      <p class="artist-name">
+        {{word.eng}} / {{word.tr}}
+      </p>
+      <span class="tags">{{word.sentence | slice:0:100}}..</span>
+    </li>
+  </ul>
+</section>
