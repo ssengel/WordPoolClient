@@ -1,12 +1,60 @@
+<div class="container">
+  <div class="wall shadow rounded">
 
-<div id="wordContent" class="row justify-content-md-center align-items-center" *ngIf="word" (click)="toggle()">
-    <div>
-      <h1 *ngIf="!state" class="display-3">{{word.tr}}</h1>
-      <div class="row justify-content-md-center">
-        <h1 *ngIf="state" class="display-3">{{word.eng}}</h1>
+    <div class="p-3 mb-3 border shadow-sm rounded">
+
+      <div class="justify-content-center d-flex">
+        <form class="form-row form-inline">
+
+          <div class="col-auto my-1">
+            <select (change)="onChangeCategory($event.target.value)" class="custom-select mr-sm-2" id="selectMain">
+              <option selected value="myPools">MyPools</option>
+              <option value="random">Random Word</option>
+            </select>
+          </div>
+          <div class="col-auto my-1">
+            <select class="custom-select mr-sm-2" id="selectPool">
+              <option *ngFor="let pool of pools" value="{{pool._id}}">{{pool.name}}</option>
+            </select>
+          </div>
+          <div *ngIf="loading">
+              <img src="http://www.uskumru.com.tr/Contents/images/loading.gif" height="45px"
+                width="45px" alt="">
+            </div>
+          <div *ngIf="!loading" (click)="start()" class="btn btn-outline-secondary">Start</div>
+        </form>
       </div>
-      
-      <h1 *ngIf="state" class="display-4">{{word.sentence}}</h1>
+
     </div>
 
+    <div class="justify-content-center d-flex">
+        
+      </div>
+
+    <!-- Random -->
+
+
+
+    <!-- <div class="justify-content-center d-flex">
+      <div *ngIf="nextButton" (click)=toggle() class="mb-2 btn btn-outline-secondary">Next Word</div>
+    </div> -->
+
+    <div *ngIf="initialState && !loading" id="wordContent" class="rounded shadow border justify-content-center align-items-center" (click)="toggle()">
+
+      
+
+      <div *ngIf='wordsOver' class="display-4">Words Over</div>
+
+      <div *ngIf='!wordOver && word'>
+        <div *ngIf="state" class="justify-content-center">
+          <h1 class="display-4">{{word.eng}}</h1><hr>
+          <h1 class="text-muted display-5">{{word.sentence}}</h1>
+        </div>
+        <h1 *ngIf="!state" class="text-primary display-4">{{word.tr}}</h1>
+      </div>
+
+    </div>
+
+    <!-- Random -->
+  </div>
 </div>

@@ -32,7 +32,6 @@ export class CreateWordComponent implements OnInit {
       eng: eng.value,
       tr: tr.value,
       sentence: sentence.value,
-      category: category.value
     };
 
     this.wordService.create(word).subscribe(

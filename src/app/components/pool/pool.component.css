@@ -1,6 +1,7 @@
 
 .wordCard{
-    border-bottom: 3px solid darkgreen;
+    border-bottom: 4px solid;
     margin-top: 10px;
+    cursor: pointer;
 }
 

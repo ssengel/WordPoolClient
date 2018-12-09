@@ -46,46 +46,55 @@
   width: 100%;
   list-style: none;
   font-size: 1.1em;
-  color: rgb(105, 105, 105);
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 5px;
   /*so things don't jump around*/
   position: absolute;
-  top: calc(95%);
+  top: calc(100%);
   overflow-y: auto;
   background: #fff;
 }
 .filter-select-list img {
   margin-right: 30px;
+  border-radius: 50%
 }
-.tags {
-  font-size: 12px;
-  font-style: italic;
-  color: #C0C0C0;
-  margin-right: 10px;
-  position: relative;
-}
-.filter-select-list:hover .tags {
-  color: #fff;
-}
+
 .filter-select-list {
   cursor: pointer;
-  padding: 5px 10px;
 }
 .artist-name {
   display: inline-block;
   position: absolute;
 }
 .filter-select-list:hover {
-  background:  #C0C0C0;
-  color: #fff
+  background:  #f8f9fa;
 }
-.list-highlight,
-.list-highlight:hover {
-  background: rgb(55, 55, 55);
-  color: #fff
+
+
+
+/* samet */
+#filter{
+  position: absolute;
+  top: calc(100%);
+  overflow-y: auto;
+  background: #fff;
+  z-index: 5;
+  width: 100%;
+  list-style: none;
 }
+
+.filter-list-item :hover{
+  background:  #f8f9fa;
+}
+.filter-list-item img {
+  margin-right: 30px;
+  border-radius: 30%
+}
+.filter-list-item {
+  cursor: pointer;
+}
+
 /* @media only screen and (max-width: 768px) {
   .filter-select,
   #keyword {

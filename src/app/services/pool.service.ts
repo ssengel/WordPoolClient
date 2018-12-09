@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Pool } from '../models/pool';
+import { Word } from '../models/word';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PoolsService {
+export class PoolService {
 
-  private readonly url = "http://212.125.24.247:8080/pool/";  
+  private readonly url = "http://212.125.24.247:8081/pool/";  
   
   constructor(private http: HttpClient) { }
 
-  getAllPools(){
+  getPools(){
     return this.http.get<Pool[]>(this.url);
+  }
+
+  getPool(id: String){
+    return this.http.get<Pool>(this.url + id);
   }
 
   createPool(pool: Pool){
@@ -26,4 +31,14 @@ export class PoolsService {
   deletePool(id: String){
     return this.http.delete<Pool>(this.url + id)
   }
+
+  getWordsByPoolId(id: String){
+    return this.http.get<Word[]>(this.url + id + "/word");
+  }
+
+  getWordsCountByPoolId(poolId: String){
+    return this.http.get(this.url + poolId + "/wordCount")
+  }
+
+  
 }

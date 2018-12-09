@@ -9,7 +9,7 @@ import { catchError } from "rxjs/operators";
 })
 export class WordService {
 
-  private readonly url = "http://212.125.24.247:8080/word/";
+  private readonly url = "http://212.125.24.247:8081/word/";
 
   constructor(private http: HttpClient, private err: ErrorHandlerService) { }
 
@@ -29,7 +29,7 @@ export class WordService {
 
   create(word: Word) {
     return this.http
-      .post(this.url, word);
+      .post<Word>(this.url, word);
   }
 
   deleteById(id: String) {
@@ -43,5 +43,9 @@ export class WordService {
 
   search(query: string) {
     return this.http.get<Word[]>(this.url + "search/" + query);
+  }
+
+  getRandomWords(from, to){
+    return this.http.get<Word[]>(this.url + `random/${from}/${to}`)
   }
 }

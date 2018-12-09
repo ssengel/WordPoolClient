@@ -1,31 +1,29 @@
 <div *ngIf=words class="row">
   <div class="container" style="min-height: 100vh;">
-    <br>
 
-    <!-- Head  -->
-    <div class="container bg-white p-3">
+
+    <div class="wall shadow rounded">
+      <!-- head -->
       <div class="row">
-          <!-- search -->
-          <div class="col-md-10">
-            <app-search-word></app-search-word>
-          </div>
-          <!-- search -->
-          <!-- create word -->
-          <div class="col-md-2">
-            <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
-          </div>
-          <!-- create word -->
+        <!-- search -->
+        <div class="col-md-10 my-1">
+          <app-search-word></app-search-word>
+        </div>
+        <!-- search -->
+        <!-- create word -->
+        <div class="col-md-2 my-1">
+          <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
+        </div>
+        <!-- create word -->
       </div>
-    </div>
-    <!-- Head  -->
+      <!-- head -->
 
-
-    <!-- words -->
-    <div class="wall">
+      <hr>
+      <!-- words -->
       <div class="row">
-        <div class="col-md-4" *ngFor="let word of words | paginate: { id: 'server', itemsPerPage: perPage, currentPage: p, totalItems: total }">
-          <div class="card text-center wordCard" style="cursor: pointer;" (click)="setModalContent(word)" data-toggle="modal"
-            data-target="#myModal">
+        <div class="col-md-3" *ngFor="let word of words | paginate: { id: 'server', itemsPerPage: perPage, currentPage: p, totalItems: total }">
+          <div class="card shadow text-center wordCard" [style.border-bottom-color]="getPoolDetail(word.poolId).color" (click)="setModalContent(word)"
+            data-toggle="modal" data-target="#myModal">
             <div class="card-body">
               <h5 class="card-title">
                 {{word.eng}}
@@ -33,76 +31,30 @@
               <div class="card-content">
                 {{word.sentence}}
               </div>
+              <br>
+              <div class="d-flex justify-content-between">
+                <div [innerHtml]="getPoolDetail(word.poolId).name"></div>
+                <div style="font-size: 13px" class="div">{{word.createdAt | date:'short' | slice:0:8}}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- words -->
     </div>
-    <!-- words -->
 
     <!-- pagination -->
-    <div class="card">
-      <div class="bg-wall justify-content-center d-flex mt-3">
-        <div class="spinner" [ngClass]="{ 'hidden': !loading }"></div>
-        <pagination-controls class="my-pagination" (pageChange)="getPage($event)" id="server"></pagination-controls>
+    
+      <div class="bg-wall justify-content-center d-flex p-3">
+        <pagination-controls class="my-pagination mr-5" (pageChange)="getPage($event)" id="server"></pagination-controls>
       </div>
-    </div>
     <!-- pagination -->
 
   </div>
 
   <!-- [routerLink]="['/wordDetail', word._id]" -->
 
-  <!-- Modal Detail-->
-  <div *ngIf=modal class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form #wordForm>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="eng">Eng</label>
-                  <input type="text" class="form-control" name="eng" [(ngModel)]="modal.eng" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="tr">Tr</label>
-                  <input type="text" class="form-control" name="tr" [(ngModel)]="modal.tr" required>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-group">
-              <label for="sentence">Sentence</label>
-              <input type="text" class="form-control" name="sentence" [(ngModel)]="modal.sentence" required>
-            </div>
-
-            <div class="form-group">
-              <label for="category">Word Category</label>
-              <select class="form-control" name="category" [(ngModel)]="modal.category" required>
-                <option *ngFor="let category of categories" [value]="category">{{category}}</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" (click)="update()" data-dismiss="modal" class="btn btn-primary">Save changes</button>
-          <button type="button" (click)="delete(modal._id)" data-dismiss="modal" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Modal Detail -->
 
   <!--Create Word Modal -->
   <div class="modal fade" id="createWordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -138,19 +90,74 @@
             </div>
 
             <div class="form-group">
-              <label for="category">Word Category</label>
-              <select class="form-control" name="category" required #category>
-                <option *ngFor="let category of categories">{{category}}</option>
+              <label>Pool</label>
+              <select class="form-control" #poolId>
+                <option [value]="pool._id" *ngFor="let pool of pools">{{pool.name}}</option>
               </select>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" (click)="create(eng, tr, sentence, category)" data-dismiss="modal" class="btn btn-primary">Create</button>
+          <button type="button" (click)="create(eng, tr, sentence, poolId)" data-dismiss="modal" class="btn btn-primary">Create</button>
         </div>
       </div>
     </div>
   </div>
   <!-- Create Word Modal -->
 </div>
+
+
+
+
+
+<!-- Modal Detail-->
+<div *ngIf=modal class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Word</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #wordForm>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="eng">Eng</label>
+                <input type="text" class="form-control" name="eng" [(ngModel)]="modal.eng" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="tr">Tr</label>
+                <input type="text" class="form-control" name="tr" [(ngModel)]="modal.tr" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sentence">Sentence</label>
+            <input type="text" class="form-control" name="sentence" [(ngModel)]="modal.sentence" required>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Word Category</label>
+            <select class="form-control" name="pool" [(ngModel)]="selectedPool">
+              <option *ngFor="let pool of pools" [value]="pool._id">{{pool.name}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="update()" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+        <button type="button" (click)="delete(modal._id)" data-dismiss="modal" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Detail -->

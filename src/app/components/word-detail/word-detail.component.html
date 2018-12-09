@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="wall shadow rounded">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="p-3 mb-3 shadow border border-light rounded">
+
+                    <!-- word Detail -->
+                    <div id="detailContent">
+                        <div class="d-flex justify-content-between">
+                            <div><strong>{{word.eng}}</strong></div>
+                            <div class="text-muted">{{word.createdAt | date: 'short'}}</div>
+                        </div>
+                        <hr>
+                        {{word.tr}}
+                        <hr>
+                        <div class="text-muted">{{word.sentence}}</div>
+                        <hr>
+                        <div class="d-flex justify-content-end">
+                            <div (click)="edit()" class="btn btn-outline-secondary">Edit</div>
+                            <div (click)="delete()" class="ml-2 btn btn-outline-secondary">Delete</div>
+                        </div>
+                    </div>
+                    <!-- word Detail -->
+                    
+                    <!-- Word Edit Form -->
+                    <div id="detailForm" style="display:none;">
+                        <form #wordForm>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="eng">Eng</label>
+                                        <input type="text" class="form-control" name="eng" [(ngModel)]="word.eng">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tr">Tr</label>
+                                        <input type="text" class="form-control" name="tr" [(ngModel)]="word.tr">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sentence">Sentence</label>
+                                <input type="text" class="form-control" name="sentence" [(ngModel)]="word.sentence">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Pool</label>
+                                <select class="form-control" name="pool" [(ngModel)]="word.poolId">
+                                    <option *ngFor="let pool of pools" [value]="pool._id">{{pool.name}}</option>
+                                </select>
+                            </div>
+                            <div *ngIf="!loading" class="d-flex justify-content-between">    
+                                <div  (click)="save()" class="btn text-primary"><strong>Save</strong></div>
+                                <div *ngIf="loading">
+                                        <img src="http://www.uskumru.com.tr/Contents/images/loading.gif" height="45px"
+                                          width="45px" alt="">
+                                </div>
+                                <div (click)="cancel()" class="btn text-muted">Cancel</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Word Edit Form -->
+            </div>
+        </div>
+
+
+    </div>
+</div>

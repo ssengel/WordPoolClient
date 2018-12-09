@@ -8,7 +8,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  private readonly url = "http://212.125.24.247:8080/"
+  private readonly url = "http://212.125.24.247:8081/"
 
   constructor(private router : Router, private http: HttpClient) { }
 
@@ -16,8 +16,8 @@ export class AuthService {
     return this.http.post<User>(this.url + 'login', user);
   }
 
-  register(user: any){
-    return this.http.post<User>(this.url + "login", user);
+  register(user: User){
+    return this.http.post<User>(this.url + "register", user);
   }
 
   isLoggedIn(): boolean {

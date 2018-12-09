@@ -1,0 +1,133 @@
+
+
+<div class="container">
+  <div class="wall">
+    
+    <!-- head -->
+
+    <div class="d-flex justify-content-between p-3 rounded shadow">
+      <div>
+        <strong *ngIf="pool">{{pool.name}}</strong>
+      </div>
+      <div>
+        <div class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#modalCreateWordToPool">New Word</div>
+        <div (click)="deletePool()" class="btn btn-outline-secondary">Delete Pool </div>
+      </div>
+
+    </div>
+
+    <!-- head -->
+
+    <hr>
+    <!-- word List -->
+    <div *ngIf="wordList">
+      <div *ngIf="wordList.length === 0 " class="alert alert-info">Bu asdfasdfasdf hic kelimesi yok</div>
+    </div>
+    <div *ngIf="wordList">
+      <div *ngFor="let word of wordList">
+        <div class="card" style="border-left: solid 5px;" [style.border-left-color]="pool.color">
+          <div class="card-body">
+
+            <div class="d-flex justify-content-between">
+              <div><strong>{{word.eng}}</strong></div>
+              <div>{{word.createdAt | date: 'short'}}</div>
+            </div>
+
+            <div class="text-muted">{{word.tr}}</div>
+
+            <div>{{word.sentence}}</div>
+
+            <div id="{{word._id}}Content" style="display: none">
+              <hr>
+              <form>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="eng">Eng</label>
+                      <input type="text" class="form-control" value="{{word.eng}}" name="eng" required #eng>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="tr">Tr</label>
+                      <input type="text" class="form-control" value="{{word.tr}}" name="tr" required #tr>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="sentence">Sentence</label>
+                  <input type="text" class="form-control" value="{{word.sentence}}" name="sentence" required #sentence>
+                </div>
+
+              </form>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <div id="{{word._id}}Save" (click)="updateWord(word, eng, tr, sentence)" style="display: none" class="btn btn-outline-primary btn-sm mr-2">Save</div>
+              <div id="{{word._id}}Cancel" style="display: none" (click)=cancel(word._id) class="btn btn-outline-secondary btn-sm mr-2">Cancel</div>
+              <div id="{{word._id}}Edit" (click)="edit(word._id)" class="btn btn-outline-secondary btn-sm mr-2">Edit</div>
+              <div id="{{word._id}}Delete" (click)="deleteWord(word._id)" class="btn btn-outline-secondary btn-sm">Delete</div>
+            </div>
+
+          </div>
+        </div>
+        <br>
+      </div>
+
+    </div>
+    <!-- word List -->
+  </div>
+
+  
+</div>
+
+
+
+
+<!--Create Word Modal -->
+<div class="modal fade" id="modalCreateWordToPool" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Create Form -->
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="eng">Eng</label>
+                <input type="text" class="form-control" name="eng"  #eng>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="tr">Tr</label>
+                <input type="text" class="form-control" name="tr"  #tr>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="sentence">Sentence</label>
+            <input type="text" class="form-control" name="sentence"  #sentence>
+          </div>
+        </form>
+        <!-- Create Form -->
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" >Close</button>
+        <button type="submit" (click) = "createWord(eng, tr, sentence)" data-dismiss="modal" class="btn btn-primary">Create</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Create Word Modal -->

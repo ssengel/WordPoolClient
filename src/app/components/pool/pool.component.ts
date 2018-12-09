@@ -4,11 +4,15 @@ import { Word } from "../../models/word";
 import * as Alertify from "alertifyjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { async } from "rxjs/internal/scheduler/async";
+import { Pool } from "src/app/models/pool";
+import { PoolService } from "src/app/services/pool.service";
+import { forkJoin } from "rxjs";
 
 interface ServerResponse {
   words: Word[];
   totalWords: number;
 }
+
 
 @Component({
   selector: "app-pool",
@@ -17,40 +21,50 @@ interface ServerResponse {
 })
 export class PoolComponent implements OnInit {
 
-  private categories = [
-    "Health",
-    "Electronic",
-    "Art",
-    "Computer"
-  ];
+  private pools: Pool[];
   private err;
   private modal: Word;
-
+  private selectedPool: String;
+  
   //pagination
   private words: Word[];
   private p: number;
   private total: number;
-  private loading: boolean;
   private perPage: number = 15;
 
-  constructor(private wordService: WordService) { }
+  constructor(private wordService: WordService, private poolService: PoolService) { }
 
   ngOnInit() {
-    this.getPage(1);
+    
+    forkJoin(
+      this.poolService.getPools(),
+      this.wordService.getWordsFromTo(0,this.perPage)
+    )
+    .subscribe(([pools, wordInfo]) => {
+      this.pools = pools;
+      console.log(wordInfo)
+      const wInfo:any = wordInfo;
+      this.words = wInfo.words;
+      this.total = wInfo.totalWords;
+      this.p = 0;
+    })
+    
+  }
+
+  getPoolDetail(poolId: String){
+      return this.pools.find(x => x._id === poolId);
   }
 
   //pagination 
   getPage(page: number) {
     const start = (page - 1) * this.perPage;
     const end = start + this.perPage;
-    this.loading = true;
     this.wordService.getWordsFromTo(start, end)
       .subscribe(
           (res: ServerResponse )=>{
               this.total = res.totalWords;
               this.words = res.words;
               this.p = page;
-              this.loading = false;
           }
       )
   }
@@ -59,13 +73,14 @@ export class PoolComponent implements OnInit {
     eng: HTMLInputElement,
     tr: HTMLInputElement,
     sentence: HTMLInputElement,
-    category: HTMLSelectElement
+    poolId: HTMLOptionElement
   ) {
+
     let word: Word = {
+      poolId: poolId.value,
       eng: eng.value,
       tr: tr.value,
       sentence: sentence.value,
-      category: category.value
     };
 
     this.wordService.create(word)
@@ -89,10 +104,12 @@ export class PoolComponent implements OnInit {
     })
   }
   setModalContent(word: Word) {
+    this.selectedPool = this.pools.find(x => x._id === word.poolId)._id;
     this.modal = Object.assign({}, word)
   }
 
   update() {
+    this.modal.poolId = this.selectedPool;
     this.wordService.update(this.modal).subscribe(
       (res: Word) => {
         const index = this.words.findIndex(x => x._id == res._id);

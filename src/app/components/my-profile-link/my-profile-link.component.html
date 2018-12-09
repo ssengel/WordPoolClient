@@ -1,0 +1,6 @@
+<a *ngIf="user" [routerLink]="['/myProfile']">
+<div class="btn">
+  <span class="text-white mr-2">{{user.username | uppercase}}</span>
+  <img class="rounded-circle" height="30" width="30" src="http://212.125.24.247:8081/{{user.image.path}}">
+</div>
+</a>

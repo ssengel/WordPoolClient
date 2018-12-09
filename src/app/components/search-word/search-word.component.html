@@ -1,15 +1,25 @@
 <section class="filter-wrapper">
   <div class="keyword-wrapper">
-      <input [formControl]="queryField" type="text" class="form-control" id="keyword" placeholder="Search for words...">
+    <input #searchBox [formControl]="queryField" (keydown.esc)="onKeyESC($event)" (blur)="onBlur($event)" (focus)="onFocus($event)"
+      type="text" class="form-control" id="keyword" placeholder="Search for words...">
     <!-- <input [formControl]="queryField" type="text" id="keyword" placeholder="Search for words..." /> -->
   </div>
-  <ul class="filter-select">
-    <li *ngFor="let word of words" class="filter-select-list">
-      <img alt="" width="50" height="50">
-      <p class="artist-name">
-        {{word.eng}} / {{word.tr}}
+  <!-- <ul id="filter"   class="filter-select">
+    <li *ngFor="let word of words" (mouseenter)="onMouseEnter(event)" (mouseleave)="onMouseLeave()" class="filter-select-list list-group-item">
+      <img  width="20" height="20" [style.background-color]="getPoolDetail(word.poolId).color">
+      <p  class="artist-name">
+        {{word.eng}} / <small>{{word.tr}}</small>
       </p>
-      <span class="tags">{{word.sentence | slice:0:100}}..</span>
     </li>
+  </ul> -->
+  <ul class="list-group" id="filter">
+
+        <li class="list-group-item filter-list-item" *ngFor="let word of words" routerLink = "/word/{{word._id}}" (mouseenter)="onMouseEnter(event)"
+          (mouseleave)="onMouseLeave()">
+            <img width="20" height="20" [style.background-color]="getPoolDetail(word.poolId).color">
+            {{word.eng}} / <small>{{word.tr}}</small>
+        </li>
+
   </ul>
+
 </section>

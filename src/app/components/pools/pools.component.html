@@ -1,34 +1,48 @@
-<br>
 <div *ngIf="pools" class="container">
-
-    <!-- head -->
-    <form class="bg-white">
-       
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
-                    <div class="input-group p-3">
-                        <input type="text" class="form-control" placeholder="Pool Name" required #poolName>
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary" (click)="createPool(poolName)">Create Pool</button>
-                        </div>
+    <div class="wall shadow rounded">
+        <!-- head -->
+        <form>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label for="eng">Pool Name</label>
+                        <input type="text" class="form-control" #poolName>
                     </div>
                 </div>
-           
-        </div>
-
-    </form>
-    <!-- head -->
-
-    <div class="wall">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="color">Color</label>
+                        <input type="color" class="form-control" value="#f6b73c" id="color" #color>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="color">&nbsp;</label>
+                    <div (click)="createPool(poolName,color)" class="btn btn-outline-primary form-control">New Pool</div>
+                </div>
+            </div>
+        </form>
+        <!-- head -->
+        <hr>
         <div class="row">
-            <div *ngFor="let pool of pools" class="col-md-3">
-                <div class="card text-black">
-                    <a routerLink="./{{pool._id}}">
-                        <img class="card-img-top" src="https://lh3.googleusercontent.com/FyZA5SbKPJA7Y3XCeb9-uGwow8pugxj77Z1xvs8vFS6EI3FABZDCDtA9ScqzHKjhU8av_Ck95ET-P_rPJCbC2v_OswCN8A=s688">
-                        <div class="card-body text-center">
-                            {{pool.name}}
+            <div *ngFor="let pool of pools" class="col-md-4">
+
+                <div routerLink="./{{pool._id}}">
+                    <div class="card shadow-sm" [style.border-left-color]="pool.color" style="border-left: solid 5px; cursor: pointer;">
+                        <div class="card-body">
+                            <div>{{pool.name}}</div>
                         </div>
-                    </a>
+
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    {{pool.wordCount}}
+                                </div>
+                                <div>{{pool.createdAt | date: 'short' | slice:0:8}}</div>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
                 <br>
             </div>

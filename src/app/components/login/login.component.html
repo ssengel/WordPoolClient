@@ -15,7 +15,9 @@
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" placeholder="Password" #password>
             </div>
-            <button (click)="login(email, password)" class="btn btn-primary btn-block">Login</button>
+            <button (click)="login(email, password)" class="btn btn-primary btn-block">Login</button><br>
+            <button [routerLink]="['/register']" class="btn btn-outline-secondary btn-block">New Account</button>
+
           </form>
 
           <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
