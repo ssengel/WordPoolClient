@@ -3,6 +3,7 @@ import { Pool } from 'src/app/models/pool';
 import { PoolService } from 'src/app/services/pool.service';
 import { Observable, merge, forkJoin } from 'rxjs';
 import { shareReplay, tap, mergeMap, map, mergeAll, concatAll, concatMap } from 'rxjs/operators';
+import { ExploreService } from 'src/app/services/explore.service';
 
 
 export interface WordCountResponce{
@@ -19,8 +20,9 @@ export class PoolsComponent implements OnInit {
 
   pools: Pool[];
   poolsObservable:Observable<Pool[]>;
+  subscribedPools: Pool[] = [];
 
-  constructor(private poolService: PoolService) { }
+  constructor(private poolService: PoolService, private exploreService: ExploreService) { }
 
   ngOnInit() {
     this.poolsObservable = this.poolService.getPools()
@@ -31,12 +33,12 @@ export class PoolsComponent implements OnInit {
 
     this.getAllPools();
     this.getWordCountOfPools();
+    this.getSubscribedPools();
   }
 
   getAllPools(){
       this.poolsObservable
           .subscribe((pools:Pool[]) => {
-              console.log(pools)
               this.pools = pools;
       })
   }
@@ -48,10 +50,17 @@ export class PoolsComponent implements OnInit {
             mergeMap((pool:Pool) => this.poolService.getWordsCountByPoolId(pool._id))
         )
         .subscribe((res:WordCountResponce) =>{
-          console.log(res);
           const pool = this.pools.find(x => x._id ===res.poolId);
           pool.wordCount = res.wordCount;
         })
+  }
+
+  getSubscribedPools(){
+      this.exploreService.getSubscribedPools().subscribe(
+        (res) =>{
+          this.subscribedPools = res;
+        }
+      )
   }
 
   createPool(poolName: HTMLInputElement, poolColor: HTMLInputElement){

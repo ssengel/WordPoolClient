@@ -16,16 +16,16 @@ export class ExplorePoolDetailComponent implements OnInit {
   private user: User;
   private pool: Pool;
   private words: Word[];
-  private loading:boolean = false;
+  private loading:boolean = true;
+  private isSubscripton: boolean = false;
 
   constructor(private exploreService: ExploreService, private route: ActivatedRoute, private poolService: PoolService) { }
 
   ngOnInit() {
     const poolId = this.route.snapshot.params['poolId'];
-    this.getWordsByPoolId(poolId)
+    this.getWordsByPoolId(poolId);
     this.getPoolAndUserInfo(poolId);
-    
-
+    this.checkSubscription(poolId);
   }
 
   async getPoolAndUserInfo(poolId: String){
@@ -42,13 +42,36 @@ export class ExplorePoolDetailComponent implements OnInit {
       )
   }
   
-  copyPool(poolId: String){
+  subscribe(poolId: String){
     this.loading = true;
-    this.exploreService.copyPool(poolId).subscribe(
+    this.exploreService.subscribe(poolId).subscribe(
        res =>{
          this.loading =false;
-         console.log(res);
+         this.isSubscripton = true;
        }
+    )
+  }
+
+  unSubscribe(poolId: String){
+    this.loading = true;
+    this.exploreService.unSubscribe(poolId).subscribe(
+       res =>{
+         this.loading =false;
+         this.isSubscripton = false;
+       }
+    )
+  }
+
+  checkSubscription(poolId: String){
+    this.exploreService.checkSubscription(poolId).subscribe(
+      (res:any) => {
+        if(res.subscription == null){
+          this.isSubscripton = false;
+        }else{
+          this.isSubscripton = true;
+        }
+        this.loading = false;
+      }
     )
   }
 }

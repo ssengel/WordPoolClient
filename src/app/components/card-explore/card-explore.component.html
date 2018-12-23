@@ -1,6 +1,6 @@
 <div class="card shadow" >
   <div class="card-body">
-    <h5 class="card-title"><span style="cursor:pointer;" routerLink ="./pool/{{pool._id}}">{{pool.name}}</span></h5>
+    <h5 class="card-title"><span style="cursor:pointer;" routerLink ="/explore/pool/{{pool._id}}">{{pool.name}}</span></h5>
     <footer *ngFor="let exWord of exWords" class="blockquote-footer">{{exWord.eng}}</footer>
   </div>
   <div class="card-footer">

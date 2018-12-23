@@ -79,7 +79,7 @@ export class RandomComponent implements OnInit {
 
   async start(){
     this.loading = true;
-    await this.delay(1000);
+    await this.delay(500);
 
     if($('#selectMain').val() === "random"){
         const start = this.randomWordsCount * 30;
@@ -95,9 +95,6 @@ export class RandomComponent implements OnInit {
             this.toggle();
           }
         )
-
-        
-
     }else{
       const val: String = $('#selectPool').val()
       if(val === "all"){

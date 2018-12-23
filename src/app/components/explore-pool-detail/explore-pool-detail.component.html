@@ -2,16 +2,17 @@
     <div class="wall ">
         <!-- head -->
         <div class="shadow p-3 mb-4 bg-white rounded">
-            <div class="d-flex justify-content-between">
+            <div class="form-inline d-flex justify-content-between">
                 <div *ngIf="user">
                     <img height="30" width="30" src="https://cdn1.iconfinder.com/data/icons/mix-color-4/502/Untitled-1-512.png">
                     <strong class="ml-2">{{user.username}}</strong>
                 </div>
                 <div *ngIf="pool"><strong>{{pool.name}}</strong></div>
-                <div>
-                    <div *ngIf="!loading" [hidden]="copyStatus" (click)="copyPool(pool._id)" class="btn">Copy Pool</div>
+                <div class="d-flex justify-content-center">
+                    <div *ngIf="!loading && !isSubscripton" (click)="subscribe(pool._id)" class="btn">Subscribe</div>
+                    <div *ngIf="!loading && isSubscripton" (click)="unSubscribe(pool._id)" class="btn">Unsubscribe</div>
                     <div *ngIf="loading">
-                        <img src="http://www.uskumru.com.tr/Contents/images/loading.gif" height="45px" width="45px" alt="">
+                        <img src="http://www.uskumru.com.tr/Contents/images/loading.gif" height="30px" width="30px" alt="">
                     </div>
                 </div>
             </div>

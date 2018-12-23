@@ -23,9 +23,9 @@
         </form>
         <!-- head -->
         <hr>
+        <!-- myPools -->
         <div class="row">
             <div *ngFor="let pool of pools" class="col-md-4">
-
                 <div routerLink="./{{pool._id}}">
                     <div class="card shadow-sm" [style.border-left-color]="pool.color" style="border-left: solid 5px; cursor: pointer;">
                         <div class="card-body">
@@ -47,5 +47,16 @@
                 <br>
             </div>
         </div>
+        <!-- myPools -->
+        
+        <!-- subscribed Pools -->
+        <div *ngIf="subscribedPools.length > 0">
+                <h5>Your Subscriptions</h5>
+                <hr>
+                <div class="row">
+                    <app-card-explore class="col-md-4" *ngFor="let p of subscribedPools" [pool]="p"></app-card-explore>
+                </div>
+        </div>
+        <!-- subscribed Pools -->
     </div>
 </div>

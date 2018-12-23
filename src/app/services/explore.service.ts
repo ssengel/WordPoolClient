@@ -29,8 +29,20 @@ export class ExploreService {
     return this.http.get<Word[]>(this.url + "pool/" + poolId + "/exampleWords")
   }
 
-  copyPool(poolId: String){
-    return this.http.get(this.url + "pool/" + poolId + "/copyPool")
+  subscribe(poolId: String){
+    return this.http.get(this.url + "pool/" + poolId + "/subscribe")
+  }
+
+  unSubscribe(poolId: String){
+    return this.http.delete(this.url + "pool/" + poolId + "/unSubscribe")
+  }
+
+  checkSubscription(poolId: String){
+    return this.http.get(this.url + "pool/" + poolId + "/checkSubscription")
+  }
+
+  getSubscribedPools(){
+    return this.http.get<Pool[]>(this.url + "getSubscribedPools")
   }
   
 }
