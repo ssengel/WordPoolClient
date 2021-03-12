@@ -11,7 +11,7 @@ export class ExploreService {
 
   constructor(private http:HttpClient) { }
 
-  private readonly url = "http://212.125.24.247:8081/explore/";  
+  private readonly url = "http://localhost:8081/explore/";  
   
   getAllPools(){
     return this.http.get<Pool[]>(this.url )

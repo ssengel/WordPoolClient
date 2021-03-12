@@ -8,7 +8,7 @@ import { Word } from '../models/word';
 })
 export class PoolService {
 
-  private readonly url = "http://212.125.24.247:8081/pool/";  
+  private readonly url = "http://localhost:8081/pool/";  
   
   constructor(private http: HttpClient) { }
 

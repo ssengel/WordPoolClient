@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
 
-  private readonly url = "http://212.125.24.247:8081/user/";
+  private readonly url = "http://localhost:8081/user/";
   
   private userSource = new BehaviorSubject<User>(null);
   currentUser = this.userSource.asObservable();

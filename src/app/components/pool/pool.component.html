@@ -12,7 +12,7 @@
         <!-- search -->
         <!-- create word -->
         <div class="col-md-2 my-1">
-          <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">Create Word </div>
+          <div class="btn btn-outline-primary " data-toggle="modal" data-target="#createWordModal">New </div>
         </div>
         <!-- create word -->
       </div>
@@ -21,7 +21,7 @@
       <hr>
       <!-- words -->
       <div class="row">
-        <div class="col-md-3" *ngFor="let word of words | paginate: { id: 'server', itemsPerPage: perPage, currentPage: p, totalItems: total }">
+        <div class="col-md-4" *ngFor="let word of words | paginate: { id: 'server', itemsPerPage: perPage, currentPage: p, totalItems: total }">
           <div class="card shadow text-center wordCard" [style.border-bottom-color]="getPoolDetail(word.poolId).color" (click)="setModalContent(word)"
             data-toggle="modal" data-target="#myModal">
             <div class="card-body">

@@ -8,7 +8,7 @@ import * as $ from 'jquery'
   providedIn: "root"
 })
 export class PWordService {
-  private readonly url = "http://212.125.24.247:8080/pool/";
+  private readonly url = "http://localhost:8080/pool/";
 
   constructor(private http: HttpClient) {}
 

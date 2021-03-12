@@ -9,7 +9,7 @@ import { catchError } from "rxjs/operators";
 })
 export class WordService {
 
-  private readonly url = "http://212.125.24.247:8081/word/";
+  private readonly url = "http://localhost:8081/word/";
 
   constructor(private http: HttpClient, private err: ErrorHandlerService) { }
 

@@ -85,7 +85,7 @@ export class PoolComponent implements OnInit {
 
     this.wordService.create(word)
       .subscribe((res: Word) => {
-        this.words.push(res);
+        this.words.unshift(res);
         eng.value = '';
         tr.value = '';
         sentence.value = '';
